@@ -2,9 +2,10 @@ package m3
 
 import "io"
 
+// ReaderMiddleware wraps an `io.ReadCloser` with additional functionality and returns a new `io.ReadCloser`. These functions are meant to be stack on top of one another for more complex data patterns and abstractions when reading data.
 type ReaderMiddleware func(io.ReadCloser) io.ReadCloser
-type WriterMiddleware func(io.WriteCloser) io.WriteCloser
 
+// Reader implements `io.ReadCloser` and adds another method for stacking middleware.
 type Reader interface {
     io.ReadCloser
 
@@ -12,6 +13,18 @@ type Reader interface {
     Use(...ReaderMiddleware)
 }
 
+// WriterMiddleware wraps an `io.WriteCloser` with additional functionality and returns a new `io.WriteCloser`. These functions are meant to stact on top of one another for more complex data patterns and abstractions when writing data.
+type WriterMiddleware func(io.WriteCloser) io.WriteCloser
+
+// Writer implements `io.WriteCloser` and adds another method for stacking middleware.
+type Writer interface {
+    io.WriteCloser
+
+    // Use provides middleware for the internal `io.WriteCloser`
+    Use(...WriterMiddleware)
+}
+
+// NewReader creates a Reader from an existing `io.ReadCloser`.
 func NewReader(r io.ReadCloser) Reader {
     return &reader{r}
 }
@@ -36,13 +49,7 @@ func (r *reader) Use(readers ...ReaderMiddleware) {
     }
 }
 
-type Writer interface {
-    io.WriteCloser
-
-    // Use provides middleware for the internal `io.WriteCloser`
-    Use(...WriterMiddleware)
-}
-
+// NewWriter creates a Writer from an existing `io.WriteCloser`.
 func NewWriter(w io.WriteCloser) Writer {
     return &writer{w}
 }
