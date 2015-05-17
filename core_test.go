@@ -89,6 +89,29 @@ func (r *StatsReadCloser) Close() error {
     return r.parent.Close()
 }
 
+func NewStatsWriter(table *crc64.Table, r io.WriteCloser) *StatsWriteCloser {
+    return &StatsWriteCloser{false, 0, 0, table, r}
+}
+
+type StatsWriteCloser struct {
+    Closed bool
+    CRC64  uint64
+    Count  int
+    table  *crc64.Table
+    parent io.WriteCloser
+}
+
+func (r *StatsWriteCloser) Write(data []byte) (n int, err error) {
+    r.Count += len(data)
+    r.CRC64 = crc64.Update(r.CRC64, r.table, data)
+    return r.parent.Write(data)
+}
+
+func (r *StatsWriteCloser) Close() error {
+    r.Closed = true
+    return r.parent.Close()
+}
+
 func TestNewWriter(t *testing.T) {
 
     // create test data
