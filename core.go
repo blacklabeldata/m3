@@ -74,3 +74,29 @@ func (w *writer) Use(writers ...WriterMiddleware) {
         w.wc = writer(w.wc)
     }
 }
+
+type WriteCombiner struct {
+    writer io.Writer
+    closer io.Closer
+}
+
+func (c *WriteCombiner) Write(data []byte) (int, error) {
+    return c.writer.Write(data)
+}
+
+func (c *WriteCombiner) Close() error {
+    return c.closer.Close()
+}
+
+type ReadCombiner struct {
+    reader io.Reader
+    closer io.Closer
+}
+
+func (c *ReadCombiner) Read(data []byte) (int, error) {
+    return c.reader.Read(data)
+}
+
+func (c *ReadCombiner) Close() error {
+    return c.closer.Close()
+}
