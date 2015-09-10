@@ -56,7 +56,7 @@ func TestNewFileWriter(t *testing.T) {
     // get file stat
     stat, err := fd.Stat()
     assert.Nil(t, err)
-    assert.Equal(t, stat.Size(), len(buffer))
+    assert.Equal(t, stat.Size(), int64(len(buffer)))
 
     // test close
     err = writer.Close()
@@ -83,7 +83,7 @@ func TestNewFileWriterSync(t *testing.T) {
     // get file stat
     stat, err := fd.Stat()
     assert.Nil(t, err)
-    assert.Equal(t, stat.Size(), len(buffer))
+    assert.Equal(t, stat.Size(), int64(len(buffer)))
 
     // test close
     err = writer.Close()
