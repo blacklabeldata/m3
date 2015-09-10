@@ -8,7 +8,7 @@ test:
 	@echo "------------------"
 	@echo " test"
 	@echo "------------------"
-	@go test -v -coverprofile=$(CWD)/coverage.out -covermode count
+	@go test -v -coverprofile=$(CWD)/coverage.out -covermode=count
 
 docs:
 	@echo "------------------"
