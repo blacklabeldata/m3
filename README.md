@@ -1,2 +1,2 @@
-# m3 [![Build Status](https://travis-ci.org/blacklabeldata/m3.svg?branch=master)](https://travis-ci.org/blacklabeldata/m3) [![Coverage Status](https://coveralls.io/repos/blacklabeldata/m3/badge.svg?branch=master&service=github)](https://coveralls.io/github/blacklabeldata/m3?branch=master)
+# m3 [![GoDoc](https://godoc.org/github.com/blacklabeldata/m3?status.svg)](http://godoc.org/github.com/blacklabeldata/m3) [![Build Status](https://travis-ci.org/blacklabeldata/m3.svg?branch=master)](https://travis-ci.org/blacklabeldata/m3) [![Coverage Status](https://coveralls.io/repos/blacklabeldata/m3/badge.svg?branch=master&service=github)](https://coveralls.io/github/blacklabeldata/m3?branch=master)
 A set of file reader/writer middlewares
